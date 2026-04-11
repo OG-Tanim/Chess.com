@@ -1,1 +1,13 @@
 @import "tailwindcss";
+
+/* @theme {
+  --color-bg-primary: #302e2b;
+} */
+
+html,
+body,
+#root {
+  overscroll-behavior: auto;
+  background-color: #302e2b;
+  scrollbar-color: #302e2b;
+}

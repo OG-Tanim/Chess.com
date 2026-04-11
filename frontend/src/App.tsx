@@ -1,4 +1,3 @@
-import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { Landing } from "./screens/Landing";
 import { Game } from "./screens/Game";
