@@ -5,7 +5,7 @@ import { WebSocket } from "ws";
 
 class GameManager {
   private games: Game[];
-  private users: WebSocket[];
+  public users: WebSocket[];
   private pendingUser: WebSocket | null;
 
   constructor() {

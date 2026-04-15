@@ -9,5 +9,5 @@ body,
 #root {
   overscroll-behavior: auto;
   background-color: #302e2b;
-  scrollbar-color: #302e2b;
+  /* scrollbar-color: #302e2b; */
 }

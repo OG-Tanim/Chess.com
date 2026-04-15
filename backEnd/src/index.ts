@@ -9,10 +9,12 @@ const gameManager = new GameManager();
 wss.on("connection", function connection(socket: WebSocket, request) {
   //add the user to the socket Server run-time memory
   gameManager.addUser(socket);
+  console.log(gameManager.users.length);
 
   //remove the user from run-Time memmory
   socket.on("close", () => {
     gameManager.removeUser(socket);
+    console.log("User Disconnected");
   });
 
   socket.on("error", console.error);
@@ -23,4 +25,5 @@ wss.on("connection", function connection(socket: WebSocket, request) {
 
   if (socket.readyState == 1)
     socket.send(`hi, you have connected successfully`);
+  console.log("User Connected");
 });
