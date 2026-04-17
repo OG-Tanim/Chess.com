@@ -47,26 +47,27 @@ export const Game = () => {
     };
   }, [socket]);
 
-  if (!socket) {
-    console.log("socket set to null");
-    return (
-      <div className="flex justify-center pt-8 text-white">Connecting...</div>
-    );
-  }
+  // if (!socket) {
+  //   console.log("socket set to null");
+  //   return (
+  //     <div className="flex justify-center pt-8 text-white">Connecting...</div>
+  //   );
+  // }
   return (
     <div className="flex justify-center pt-8">
-      <div className="max-w-screen-lg grid md:grid-cols-6 grid-cols-1 gap-4 ">
+      <div className="min-h-screen max-w-screen-lg grid md:grid-cols-6 grid-cols-1 gap-4 ">
         <div className="col-span-4">
           <Chessboard board={board}></Chessboard>
         </div>
         <div className="col-span-2 p-8 flex flex-col justify-center items-center">
           <Button
             onClick={() => {
-              socket.send(
-                JSON.stringify({
-                  type: "INIT_GAME",
-                }),
-              );
+              if (socket)
+                socket.send(
+                  JSON.stringify({
+                    type: "INIT_GAME",
+                  }),
+                );
             }}
           >
             Play
