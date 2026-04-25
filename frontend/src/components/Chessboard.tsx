@@ -39,7 +39,7 @@ export const Chessboard = ({ board }: BoardProps) => {
   return (
     <div className="flex flex-col gap-4 justify-center items-center">
       <div>Opponent</div>
-      <div className="relative h-[80vh] w-[80vh] bg-[url('/200.png')] bg-[size:100%] rounded-md">
+      <div className="relative min-h-[80vh] min-w-[80vh] bg-[url('/backgrounds/chessboard-game.png')] bg-cover bg-no-repeat bg-center rounded-md">
         {/* 1st Layer - renders the coordinates*/}
         <svg
           viewBox="0 0 100 100"
@@ -67,25 +67,29 @@ export const Chessboard = ({ board }: BoardProps) => {
           ))}
         </svg>
         {/* 2nd Layer - render the Pieces*/}
-        <div className="grid grid-cols-8 grid-rows-8 h-full w-full">
+        <div className="absolute inset-0 grid grid-cols-8 grid-rows-8 h-full w-full">
           {board.map((row, i) => {
-            if (!row) return null;
-            row.map((square, j) => {
-              return (
-                <div
-                  key={`square-${i}-${j}`}
-                  className="flex items-center justify-center relative"
-                >
-                  {square && (
-                    <img
-                      src=""
-                      alt={`${square.type} - ${square.color}`}
-                      className="w-[80%] h-[80%] object-contain"
-                    />
-                  )}
-                </div>
-              );
-            });
+            if (!row) {
+              return <div className=""></div>;
+            } else {
+              return row.map((square, j) => {
+                if (!square) return <div></div>;
+                return (
+                  <div
+                    key={`square-${i}-${j}`}
+                    className="flex items-center justify-center relative"
+                  >
+                    {
+                      <img
+                        className="h-[90%] w-[90%]"
+                        src={`/pieces/${square.color}${square.type}.png`}
+                        alt={`piece - ${square.color}${square.type}`}
+                      />
+                    }
+                  </div>
+                );
+              });
+            }
           })}
         </div>
       </div>

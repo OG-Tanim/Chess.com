@@ -12,6 +12,13 @@ export const Game = () => {
   const socket = useSocket();
   const [chess, setChess] = useState(new Chess());
   const [board, setBoard] = useState(chess.board());
+  const [background, setBackground] = useState<string>("");
+
+  useEffect(() => {
+    if (socket) {
+      setBackground("/backgrounds/game-running.png");
+    }
+  }, [socket]);
 
   useEffect(() => {
     if (!socket) {
@@ -47,19 +54,27 @@ export const Game = () => {
     };
   }, [socket]);
 
-  // if (!socket) {
-  //   console.log("socket set to null");
-  //   return (
-  //     <div className="flex justify-center pt-8 text-white">Connecting...</div>
-  //   );
-  // }
+  if (!socket) {
+    console.log("socket set to null");
+    return (
+      <div className="flex justify-center pt-8 text-white">Connecting...</div>
+    );
+  }
   return (
-    <div className="flex justify-center pt-8">
-      <div className="min-h-screen max-w-screen-lg grid md:grid-cols-6 grid-cols-1 gap-4 ">
-        <div className="col-span-4">
+    <div
+      className="flex min-h-screen justify-center item-center py-10"
+      style={{
+        backgroundImage: `url('${background}')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundColor: "transparent",
+      }}
+    >
+      <div className="max-w-screen-lg grid md:grid-cols-6 grid-cols-1 gap-20 ">
+        <div className="col-span-4 max-h-[90%]">
           <Chessboard board={board}></Chessboard>
         </div>
-        <div className="col-span-2 p-8 flex flex-col justify-center items-center">
+        <div className="h-full col-span-2 flex flex-col justify-center items-center bg-black/10 rounded-lg">
           <Button
             onClick={() => {
               if (socket)

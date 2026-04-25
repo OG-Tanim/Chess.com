@@ -6,11 +6,11 @@ export const Landing = () => {
 
   return (
     <div className="px-20">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-8 md:max-h-screen">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-8">
         <div className="col-span-2 flex justify-center p-8">
           <img
             className="max-w-[75%]"
-            src="./chessboard.jpeg"
+            src="/backgrounds/chessboard.jpeg"
             alt="chessboard"
           />
         </div>
