@@ -1,8 +1,13 @@
 @import "tailwindcss";
 
-/* @theme {
-  --color-bg-primary: #302e2b;
-} */
+@theme {
+  --color-button-hover: #5d9948;
+  --color-button-primary: #81b64c;
+  --color-green-board-coordinate-light: #739552;
+  --color-green-board-coordinate-dark: #ebecd0;
+  --color-brown-board-coordinate-light: #8d675e;
+  --color-brown-board-coordinate-dark: #e7cdb2;
+}
 
 html,
 body,
