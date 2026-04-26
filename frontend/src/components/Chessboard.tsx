@@ -39,7 +39,7 @@ export const Chessboard = ({ board }: BoardProps) => {
   return (
     <div className="flex flex-col gap-4 justify-center items-center">
       <div>Opponent</div>
-      <div className="relative min-h-[80vh] min-w-[80vh] bg-[url('/backgrounds/chessboard-game.png')] bg-cover bg-no-repeat bg-center rounded-md">
+      <div className="relative min-h-[80vh] min-w-[80vh] bg-[url('/backgrounds/board-game-green.png')] bg-cover bg-no-repeat bg-center rounded-md">
         {/* 1st Layer - renders the coordinates*/}
         <svg
           viewBox="0 0 100 100"
@@ -77,7 +77,7 @@ export const Chessboard = ({ board }: BoardProps) => {
                 return (
                   <div
                     key={`square-${i}-${j}`}
-                    className="flex items-center justify-center relative"
+                    className="flex items-center justify-center relative cursor-grab active:cursor-grabbing"
                   >
                     {
                       <img
