@@ -65,7 +65,7 @@ export const Game = () => {
     >
       <div className="max-w-screen grid md:grid-cols-5 grid-cols-1 gap-20 place-items:center">
         <div className="md:col-span-3 max-h-[90%]">
-          <Chessboard board={board}></Chessboard>
+          <Chessboard board={board} chess={chess}></Chessboard>
         </div>
         <div className="h-full w-full md:col-span-2 flex flex-col justify-center items-center p-8 bg-black/10 rounded-lg">
           <Button

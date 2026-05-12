@@ -1,11 +1,13 @@
-import type { Color, PieceSymbol, Square } from "chess.js";
+import type { Chess, Color, PieceSymbol, Square } from "chess.js";
+import { useEffect, useState } from "react";
 
 interface BoardProps {
   board: ({
     square: Square;
-    type: PieceSymbol;
-    color: Color;
+    type?: PieceSymbol;
+    color?: Color;
   } | null)[][];
+  chess: Chess;
 }
 
 const COLORS = {
@@ -35,11 +37,52 @@ const CoordinateLabel = ({
   </text>
 );
 
-export const Chessboard = ({ board }: BoardProps) => {
+export const Chessboard = ({ board, chess }: BoardProps) => {
+  const [absBoard, setAbsBoard] = useState<typeof board>(board);
+  const [selectedSquare, setSelectedSqure] = useState<Square | null>(null);
+  const [legalMoves, setLegalMoves] = useState<Square[] | null>(null);
+
+  useEffect(() => {
+    const abstractBoard: typeof board = [];
+
+    for (let i = 0; i < 8; i++) {
+      // 1. Initialize the row
+      abstractBoard[i] = [];
+
+      for (let j = 0; j < 8; j++) {
+        if (board[i][j] == null) {
+          // 2. Push an object for empty squares
+          abstractBoard[i].push({ square: `${FILES[j]}${RANKS[i]}` as Square });
+        } else {
+          // 3. Push the existing piece object
+          abstractBoard[i].push(board[i][j]);
+        }
+      }
+    }
+
+    setAbsBoard(abstractBoard);
+  }, []);
+
+  const handleSquareClick = (square: Square) => {
+    setSelectedSqure(square);
+    const validMoves = chess.moves({ square: square, verbose: true });
+    const moves: Square[] = [];
+    validMoves.map((move) => {
+      moves.push(move.to);
+    });
+    setLegalMoves(moves);
+  };
+
   return (
     <div className="flex flex-col gap-4 justify-center items-center">
       <div>Opponent</div>
-      <div className="relative min-h-[80vh] min-w-[80vh] bg-[url('/backgrounds/board-game-green.png')] bg-cover bg-no-repeat bg-center rounded-md">
+      <div
+        className="relative min-h-[80vh] min-w-[80vh] bg-[url('/backgrounds/board-game-green.png')] bg-cover bg-no-repeat bg-center rounded-md"
+        onClick={() => {
+          setSelectedSqure(null);
+          setLegalMoves(null);
+        }}
+      >
         {/* 1st Layer - renders the coordinates*/}
         <svg
           viewBox="0 0 100 100"
@@ -67,25 +110,37 @@ export const Chessboard = ({ board }: BoardProps) => {
           ))}
         </svg>
         {/* 2nd Layer - render the Pieces*/}
-        <div className="absolute inset-0 grid grid-cols-8 grid-rows-8 h-full w-full">
-          {board.map((row, i) => {
+        <div className="absolute inset-0 grid grid-cols-8 grid-rows-8 h-full w-full z-20">
+          {absBoard.map((row, i) => {
             if (!row) {
-              return <div className=""></div>;
+              return <div></div>;
             } else {
               return row.map((square, j) => {
                 if (!square) return <div></div>;
+                if (!square.color) {
+                  if (legalMoves?.includes(square.square))
+                    return (
+                      <div className="h-3 w-3 rounded-full bg-green-500"></div>
+                    );
+                  else return <div></div>;
+                }
                 return (
                   <div
                     key={`square-${i}-${j}`}
-                    className="flex items-center justify-center relative cursor-grab active:cursor-grabbing"
+                    className={`flex items-center justify-center cursor-grab active:cursor-grabbing focus:bg-green-500/50 ${selectedSquare === square.square ? "bg-green-500/50" : ""}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleSquareClick(square.square);
+                    }}
                   >
-                    {
-                      <img
-                        className="h-[90%] w-[90%]"
-                        src={`/pieces/${square.color}${square.type}.png`}
-                        alt={`piece - ${square.color}${square.type}`}
-                      />
-                    }
+                    {legalMoves?.includes(square.square) && (
+                      <div className="h-3 w-3 bg-green-500 rouded-full items-center"></div>
+                    )}
+
+                    <img
+                      src={`/pieces/${square.color}${square.type}.png`}
+                      alt={`piece - ${square.color}${square.type}`}
+                    />
                   </div>
                 );
               });
