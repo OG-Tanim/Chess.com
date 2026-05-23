@@ -55,31 +55,29 @@ export const Game = () => {
   // }
   return (
     <div
-      className="flex min-h-screen justify-center item-center py-10"
-      style={{
-        backgroundImage: `url('${"/backgrounds/game-running.png"}')`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundColor: "transparent",
-      }}
+      id="base"
+      className=" min-h-screen bg-[url('/backgrounds/game-running.png')] bg-cover bg-center bg-no-repeat p-8"
     >
-      <div className="max-w-screen grid md:grid-cols-5 grid-cols-1 gap-20 place-items:center">
-        <div className="md:col-span-3 max-h-[90%]">
-          <Chessboard board={board} chess={chess}></Chessboard>
-        </div>
-        <div className="h-full w-full md:col-span-2 flex flex-col justify-center items-center p-8 bg-black/10 rounded-lg">
-          <Button
-            onClick={() => {
-              if (socket)
-                socket.send(
-                  JSON.stringify({
-                    type: "INIT_GAME",
-                  }),
-                );
-            }}
-          >
-            Play
-          </Button>
+      <div className="h-full flex justify-center item-center">
+        <div className="h-full grid md:grid-cols-6 grid-cols-1 gap-10">
+          <div className="md:col-span-4 max-w-[750px]">
+            <Chessboard board={board} chess={chess}></Chessboard>
+          </div>
+
+          <div className="h-full md:h-[90vh] w-full md:min-w-[100%] md:col-span-2 flex flex-col justify-center items-center p-10 bg-black/10 rounded-xl">
+            <Button
+              onClick={() => {
+                if (socket)
+                  socket.send(
+                    JSON.stringify({
+                      type: "INIT_GAME",
+                    }),
+                  );
+              }}
+            >
+              Play
+            </Button>
+          </div>
         </div>
       </div>
     </div>

@@ -19,7 +19,7 @@ const RANKS = ["8", "7", "6", "5", "4", "3", "2", "1"];
 const FILES = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
 const RANK_POSITIONS = [2.5, 15.75, 28.25, 40.75, 53.25, 65.75, 78.25, 90.75];
-const FILE_POSITIONS = [10, 22.5, 35, 47.5, 60, 72.5, 85, 97.5];
+const FILE_POSITIONS = [10.5, 23, 35.5, 48, 60.5, 73, 85.5, 98];
 
 const CoordinateLabel = ({
   x,
@@ -32,7 +32,13 @@ const CoordinateLabel = ({
   children: string;
   isLight: boolean;
 }) => (
-  <text x={x} y={y} fontSize="2.8" fill={isLight ? COLORS.light : COLORS.dark}>
+  <text
+    x={x}
+    y={y}
+    fontSize="2.5"
+    fontWeight="700"
+    fill={isLight ? COLORS.light : COLORS.dark}
+  >
     {children}
   </text>
 );
@@ -67,9 +73,11 @@ export const Chessboard = ({ board, chess }: BoardProps) => {
     setSelectedSqure(square);
     const validMoves = chess.moves({ square: square, verbose: true });
     const moves: Square[] = [];
+
     validMoves.map((move) => {
       moves.push(move.to);
     });
+
     setLegalMoves(moves);
   };
 
@@ -77,7 +85,7 @@ export const Chessboard = ({ board, chess }: BoardProps) => {
     <div className="flex flex-col gap-4 justify-center items-center">
       <div>Opponent</div>
       <div
-        className="relative min-h-[80vh] min-w-[80vh] bg-[url('/backgrounds/board-game-green.png')] bg-cover bg-no-repeat bg-center rounded-md"
+        className="relative bg-[url('/backgrounds/board-game-green.png')] bg-cover bg-no-repeat bg-center rounded-md"
         onClick={() => {
           setSelectedSqure(null);
           setLegalMoves(null);
@@ -91,7 +99,7 @@ export const Chessboard = ({ board, chess }: BoardProps) => {
           {RANKS.map((rank, i) => (
             <CoordinateLabel
               key={`rank-${rank}`}
-              x={0.75}
+              x={0.5}
               y={RANK_POSITIONS[i]}
               isLight={i % 2 === 0}
             >
@@ -109,8 +117,9 @@ export const Chessboard = ({ board, chess }: BoardProps) => {
             </CoordinateLabel>
           ))}
         </svg>
+
         {/* 2nd Layer - render the Pieces*/}
-        <div className="absolute inset-0 grid grid-cols-8 grid-rows-8 h-full w-full z-20">
+        <div className="h-full grid grid-cols-8 grid-rows-8 place-items-center">
           {absBoard.map((row, i) => {
             if (!row) {
               return <div></div>;
@@ -120,24 +129,25 @@ export const Chessboard = ({ board, chess }: BoardProps) => {
                 if (!square.color) {
                   if (legalMoves?.includes(square.square))
                     return (
-                      <div className="h-3 w-3 rounded-full bg-green-500"></div>
+                      <div className="h-[25%] w-[25%] rounded-full bg-black/25"></div>
                     );
                   else return <div></div>;
                 }
                 return (
                   <div
                     key={`square-${i}-${j}`}
-                    className={`flex items-center justify-center cursor-grab active:cursor-grabbing focus:bg-green-500/50 ${selectedSquare === square.square ? "bg-green-500/50" : ""}`}
+                    className={`h-full w-full flex items-center justify-center cursor-grab active:cursor-grabbing focus:bg-button-primary/50 ${selectedSquare === square.square ? "bg-button-primary/50" : ""}`}
                     onClick={(e) => {
                       e.stopPropagation();
                       handleSquareClick(square.square);
                     }}
                   >
                     {legalMoves?.includes(square.square) && (
-                      <div className="h-3 w-3 bg-green-500 rouded-full items-center"></div>
+                      <div className="h-full w-full rouded-full border-2 border-black/25 items-center"></div>
                     )}
 
                     <img
+                      className={`w-full h-full object-contain ${legalMoves?.includes(square.square) ? "rounded-full border-2 border-black/25" : ""}`}
                       src={`/pieces/${square.color}${square.type}.png`}
                       alt={`piece - ${square.color}${square.type}`}
                     />
