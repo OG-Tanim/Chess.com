@@ -82,7 +82,7 @@ export const Chessboard = ({ board, chess }: BoardProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-4 justify-center items-center">
+    <div className="flex min-h-0 flex-col gap-4 justify-center items-center">
       <div>Opponent</div>
       <div
         className="relative bg-[url('/backgrounds/board-game-green.png')] bg-cover bg-no-repeat bg-center rounded-md"
@@ -136,7 +136,7 @@ export const Chessboard = ({ board, chess }: BoardProps) => {
                 return (
                   <div
                     key={`square-${i}-${j}`}
-                    className={`h-full w-full flex items-center justify-center cursor-grab active:cursor-grabbing focus:bg-button-primary/50 ${selectedSquare === square.square ? "bg-button-primary/50" : ""}`}
+                    className={`h-full w-full flex min-h-0 items-center justify-center cursor-grab active:cursor-grabbing focus:bg-button-primary/50 ${selectedSquare === square.square ? "bg-button-primary/50" : ""}`}
                     onClick={(e) => {
                       e.stopPropagation();
                       handleSquareClick(square.square);

@@ -56,15 +56,17 @@ export const Game = () => {
   return (
     <div
       id="base"
-      className=" min-h-screen bg-[url('/backgrounds/game-running.png')] bg-cover bg-center bg-no-repeat p-8"
+      className="md:h-dvh box-border bg-[url('/backgrounds/game-running.png')] bg-cover bg-center bg-no-repeat p-8"
     >
-      <div className="h-full flex justify-center item-center">
+      <div className="h-full flex min-h-0 justify-center items-center">
         <div className="h-full grid md:grid-cols-6 grid-cols-1 gap-10">
-          <div className="md:col-span-4 max-w-[750px]">
-            <Chessboard board={board} chess={chess}></Chessboard>
+          <div className="md:col-span-4 h-full min-h-0">
+            <div className="min-h-0 h-full max-w-[80vh]">
+              <Chessboard board={board} chess={chess}></Chessboard>
+            </div>
           </div>
 
-          <div className="h-full md:h-[90vh] w-full md:min-w-[100%] md:col-span-2 flex flex-col justify-center items-center p-10 bg-black/10 rounded-xl">
+          <div className="md:col-span-2 h-full flex min-h-0 flex-col justify-center items-center p-10 bg-black/10 rounded-xl">
             <Button
               onClick={() => {
                 if (socket)

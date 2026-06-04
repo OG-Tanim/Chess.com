@@ -15,4 +15,5 @@ body,
   overscroll-behavior: none;
   background-color: #302e2b;
   /* scrollbar-color: #302e2b; */
+  height: 100%;
 }
