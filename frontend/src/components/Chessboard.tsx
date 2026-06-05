@@ -13,7 +13,7 @@ interface BoardProps {
 const COLORS = {
   light: "var(--color-green-board-coordinate-light)",
   dark: "var(--color-green-board-coordinate-dark)",
-} as const;
+};
 
 const RANKS = ["8", "7", "6", "5", "4", "3", "2", "1"];
 const FILES = ["a", "b", "c", "d", "e", "f", "g", "h"];
